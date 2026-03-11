@@ -64,33 +64,13 @@ pip install -r requirements.txt
 
 ### 3. Run the app
 ```bash
-python app.py
+python application.py
 ```
 
 ### 4. Open in browser
 ```
 http://localhost:5000
 ```
-
----
-
-## 📁 Project Structure
-
-```
-fwi-predictor/
-│
-├── app.py                  # Flask application
-├── model.pkl               # Trained ML model
-├── scaler.pkl              # Feature scaler
-├── templates/
-│   ├── home.html           # Home page
-│   └── form.html           # Prediction form
-├── notebook/
-│   └── FWI_model.ipynb     # Model training notebook
-└── README.md
-```
-
----
 
 ## 📊 Model
 
