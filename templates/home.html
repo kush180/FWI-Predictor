@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background: #0d0f0e;
+            color: #c8d4c8;
+            font-family: 'Share Tech Mono', monospace;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 2rem;
+            background-image:
+                radial-gradient(ellipse at 20% 50%, rgba(232,90,26,0.05) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 20%, rgba(240,165,0,0.03) 0%, transparent 50%);
+        }
+
+        h1 {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 3rem;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: 0.08em;
+            border-left: 4px solid #e85a1a;
+            padding-left: 1rem;
+            animation: fadeIn 0.6s ease;
+        }
+
+        p {
+            font-size: 0.75rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: #4a5a4a;
+            animation: fadeIn 0.8s ease;
+        }
+
+        a {
+            display: inline-block;
+            padding: 0.85rem 2.5rem;
+            background: #e85a1a;
+            color: #fff;
+            text-decoration: none;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            transition: background 0.2s, transform 0.1s;
+            animation: fadeIn 1s ease;
+        }
+
+        a:hover { background: #c94d12; }
+        a:active { transform: scale(0.98); }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <h1>Home Page</h1>
+    <p>Forest Fire Weather Index Predictor</p>
+    <a href="/predict">Run Prediction →</a>
+</body>
+</html>

@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forest Fire Weather Index</title>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0d0f0e;
+            --surface: #131614;
+            --border: #1e2420;
+            --accent: #e85a1a;
+            --accent2: #f0a500;
+            --safe: #2ecc71;
+            --text: #c8d4c8;
+            --muted: #4a5a4a;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Share Tech Mono', monospace;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            background-image:
+                radial-gradient(ellipse at 20% 50%, rgba(232,90,26,0.04) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 20%, rgba(240,165,0,0.03) 0%, transparent 50%);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 680px;
+            animation: fadeIn 0.6s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(16px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        header {
+            margin-bottom: 2.5rem;
+            border-left: 3px solid var(--accent);
+            padding-left: 1.2rem;
+        }
+
+        header h1 {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: 0.05em;
+            line-height: 1;
+        }
+
+        header p {
+            margin-top: 0.4rem;
+            font-size: 0.72rem;
+            color: var(--muted);
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+        }
+
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            padding: 2rem;
+        }
+
+        .section-label {
+            font-size: 0.65rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .field {
+            display: flex;
+            flex-direction: column;
+            gap: 0.35rem;
+        }
+
+        .field label {
+            font-size: 0.65rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--muted);
+        }
+
+        .field input[type="text"],
+        .field input:not([type="radio"]) {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            color: var(--text);
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.85rem;
+            padding: 0.6rem 0.8rem;
+            outline: none;
+            transition: border-color 0.2s;
+            width: 100%;
+        }
+
+        .field input:focus {
+            border-color: var(--accent);
+        }
+
+        .field input::placeholder {
+            color: #2a3a2a;
+        }
+
+        /* Radio groups */
+        .radio-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 0.75rem;
+            margin-top: 0.5rem;
+        }
+
+        .radio-group input[type="radio"] { display: none; }
+
+        .radio-group label {
+            flex: 1;
+            text-align: center;
+            padding: 0.6rem 1rem;
+            border: 1px solid var(--border);
+            cursor: pointer;
+            font-size: 0.78rem;
+            letter-spacing: 0.1em;
+            color: var(--muted);
+            transition: all 0.15s ease;
+            text-transform: uppercase;
+        }
+
+        .radio-group label:hover {
+            color: var(--text);
+            border-color: #2e3a2e;
+        }
+
+        /* Classes radios */
+        #notfire:checked ~ label[for="notfire"],
+        .radio-group input#notfire:checked + label {
+            color: var(--safe);
+            border-color: var(--safe);
+            background: rgba(46,204,113,0.05);
+        }
+
+        #fire:checked + label {
+            color: var(--accent);
+            border-color: var(--accent);
+            background: rgba(232,90,26,0.07);
+        }
+
+        /* Region radios */
+        #bejaia:checked + label,
+        #sidi:checked + label {
+            color: var(--accent2);
+            border-color: var(--accent2);
+            background: rgba(240,165,0,0.06);
+        }
+
+        /* Submit */
+        button[type="submit"] {
+            width: 100%;
+            padding: 0.85rem;
+            background: var(--accent);
+            border: none;
+            color: #fff;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.1s;
+            margin-top: 0.5rem;
+        }
+
+        button[type="submit"]:hover { background: #c94d12; }
+        button[type="submit"]:active { transform: scale(0.99); }
+
+        /* Result */
+        .result {
+            margin-top: 1.5rem;
+            border: 1px solid var(--accent2);
+            background: rgba(240,165,0,0.04);
+            padding: 1.2rem 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .result span {
+            font-size: 0.65rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--muted);
+        }
+
+        .result strong {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent2);
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <header>
+        <h1>FWI Predictor</h1>
+        <p>Forest Fire Weather Index — Algerian Dataset</p>
+    </header>
+
+    <div class="card">
+        <form action="/predict" method="POST">
+
+            <p class="section-label">Meteorological Inputs</p>
+            <div class="grid">
+                <div class="field">
+                    <label for="Temperature">Temperature</label>
+                    <input id="Temperature" name="Temperature" placeholder="e.g. 29">
+                </div>
+                <div class="field">
+                    <label for="RH">Relative Humidity</label>
+                    <input id="RH" name="RH" placeholder="e.g. 57">
+                </div>
+                <div class="field">
+                    <label for="Ws">Wind Speed</label>
+                    <input id="Ws" name="Ws" placeholder="e.g. 18">
+                </div>
+                <div class="field">
+                    <label for="Rain">Rain</label>
+                    <input id="Rain" name="Rain" placeholder="e.g. 0.0">
+                </div>
+            </div>
+
+            <p class="section-label">Fire Indices</p>
+            <div class="grid">
+                <div class="field">
+                    <label for="FFMC">FFMC</label>
+                    <input id="FFMC" name="FFMC" placeholder="e.g. 85.4">
+                </div>
+                <div class="field">
+                    <label for="DMC">DMC</label>
+                    <input id="DMC" name="DMC" placeholder="e.g. 26.9">
+                </div>
+                <div class="field" style="grid-column: span 2;">
+                    <label for="ISI">ISI</label>
+                    <input id="ISI" name="ISI" placeholder="e.g. 6.7">
+                </div>
+            </div>
+
+            <p class="section-label">Classification</p>
+            <div class="radio-section">
+                <div class="radio-group">
+                    <input type="radio" name="Classes" id="notfire" value="0">
+                    <label for="notfire">✓ Not Fire</label>
+                    <input type="radio" name="Classes" id="fire" value="1">
+                    <label for="fire">🔥 Fire</label>
+                </div>
+            </div>
+
+            <p class="section-label">Region</p>
+            <div class="radio-section">
+                <div class="radio-group">
+                    <input type="radio" name="Region" id="bejaia" value="0">
+                    <label for="bejaia">Bejaia</label>
+                    <input type="radio" name="Region" id="sidi" value="1">
+                    <label for="sidi">Sidi Bel</label>
+                </div>
+            </div>
+
+            <button type="submit">Run Prediction</button>
+        </form>
+
+        {% if FWI is not none %}
+        <div class="result">
+            <span>Predicted FWI</span>
+            <strong>{{ FWI }}</strong>
+        </div>
+        {% endif %}
+    </div>
+</div>
+</body>
+</html>
